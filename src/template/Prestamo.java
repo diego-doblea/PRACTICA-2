@@ -1,5 +1,6 @@
 package template;
 
+import java.util.Scanner;
 import java.util.Date;
 
 /**
@@ -48,12 +49,21 @@ public abstract class Prestamo {
      * @param material      el material que se está solicitando en el préstamo.
      */
     public final void procesarPrestamo(String usuarioNombre, String material) {
-        asignarFechaInicio();
-        calcularFechaVencimiento();
-        notificarPrestamo(usuarioNombre, material);
-        if (permitirRenovacion()) {
+    asignarFechaInicio();
+    calcularFechaVencimiento();
+    notificarPrestamo(usuarioNombre, material);
+    
+    // Supongamos que se solicita la renovación de forma interactiva:
+    Scanner scanner = new Scanner(System.in);
+    while (permitirRenovacion()) {
+        System.out.print("¿Desea renovar el préstamo? (S/N): ");
+        String respuesta = scanner.nextLine();
+        if (respuesta.equalsIgnoreCase("S")) {
             realizarRenovacion();
-        }
+        } else {
+            break;
+	}
+      }
     }
 
     /**
